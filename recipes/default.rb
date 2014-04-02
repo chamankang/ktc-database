@@ -33,7 +33,7 @@ else
   include_recipe 'galera::server'
 end
 
-%w/
+%w(
   compute
   dashboard
   identity
@@ -41,7 +41,7 @@ end
   metering
   network
   volume
-/.each do |s|
+).each do |s|
   node.default['openstack']['db'][s]['host'] = ip
 end
 
