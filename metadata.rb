@@ -4,7 +4,7 @@ maintainer_email 'wil.reichert@kt.com'
 license          'All rights reserved'
 description      'Application cookbook for stackforge os-ops-database cookbook'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.2.9'
+version '0.2.10'
 
 %w(centos ubuntu).each do |os|
   supports os
