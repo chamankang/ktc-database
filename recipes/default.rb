@@ -47,6 +47,23 @@ end
 
 include_recipe 'openstack-ops-database::openstack-db'
 
+# UCLOUDNG-1185 : Test & validate vms-cluster (HA) setup
+# Rewind package resources, which install mysql-client and its dependencies,
+# to have options that makes mysql-client and its dependencies to use my.cnf
+# created by galera::server recipe, not to ask whether to use it or not.
+unless node['ha_disabled']
+  chef_gem 'chef-rewind'
+  require 'chef/rewind'
+
+  options = "-o Dpkg::Options::='--force-confold'"
+  options += " -o Dpkg::Options::='--force-confdef'"
+  node['mysql']['client']['packages'].each do |pkg|
+    rewind package: pkg do
+      options options
+    end
+  end
+end
+
 # process monitoring and sensu-check config
 processes = node['openstack']['db']['service_processes']
 
